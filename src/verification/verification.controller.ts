@@ -12,6 +12,7 @@ export class VerificationController {
 
         // TODO: #36 - add logic to send the token via email or sms
 
+        // TODO: #17 - Just send default 201 response on success, don't return data
         return { message: 'verification sent', token };
     }
 
