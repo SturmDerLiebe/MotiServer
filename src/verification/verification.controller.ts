@@ -10,7 +10,7 @@ export class VerificationController {
         const token =
             this.verificationService.generateVerificationToken(userId);
 
-        // add logic to send the token via email or sms
+        // TODO: #36 - add logic to send the token via email or sms
 
         return { message: 'verification sent', token };
     }
