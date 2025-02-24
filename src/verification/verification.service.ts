@@ -9,7 +9,7 @@ export class VerificationService {
     }
 
     validateVerificationToken(token: string): boolean {
-        // validate the token
+        // TODO: #36 - validate the token
 
         return true;
     }
