@@ -29,7 +29,7 @@ describe('LocalStrategy', () => {
                 localStrategy.validate('WrongUsername', 'WrongPassword');
 
             //THEN
-            expect(testFn).toThrow(UnauthorizedException);
+            expect(testFn).rejects.toThrow(UnauthorizedException);
         });
     });
 });
