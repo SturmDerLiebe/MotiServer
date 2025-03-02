@@ -1,12 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { SecurityProvider } from '../security/security.provider';
 
 @Injectable()
 export class AuthService {
-    validateUser(username: string, pass: string): boolean {
+    constructor(private readonly securityProvider: SecurityProvider) {}
+
+    async validateUser(username: string, password: string): Promise<boolean> {
         const user =
             username === 'TestUser'
                 ? { username, encPassword: 'TestPw' }
                 : null; // TODO #26: get user by username form user.service
-        return user !== null && pass === user.encPassword; // TODO #31: use encrypted comparison
+        return (
+            user !== null &&
+            (await this.securityProvider.validatePassword(
+                user.encPassword,
+                password,
+            ))
+        );
     }
 }
