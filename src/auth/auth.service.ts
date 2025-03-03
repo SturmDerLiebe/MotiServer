@@ -1,21 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { SecurityProvider } from '../security/security.provider';
+import { TempUserEntity } from './session-serializer.provider';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly securityProvider: SecurityProvider) {}
 
-    async validateUser(username: string, password: string): Promise<boolean> {
+    async validateUser(
+        username: string,
+        submittedPassword: string,
+    ): Promise<TempUserEntity | null> {
         const user =
             username === 'TestUser'
-                ? { username, encPassword: 'TestPw' }
+                ? { id: '1', username, password: 'TestPw' }
                 : null; // TODO #26: get user by username form user.service
-        return (
+        if (
             user !== null &&
             (await this.securityProvider.validatePassword(
-                user.encPassword,
-                password,
+                user.password,
+                submittedPassword,
             ))
-        );
+        )
+            return user;
+        else return null;
     }
 }
