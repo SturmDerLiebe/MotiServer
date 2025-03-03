@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import argon2 from 'argon2';
+import { verify, hash } from 'argon2';
 
 @Injectable()
 export class SecurityProvider {
     hashPassword(password: string): Promise<string> {
-        return argon2.hash(password);
+        return hash(password);
     }
 
     validatePassword(
         hashedPassword: string,
         password: string,
     ): Promise<boolean> {
-        return argon2.verify(hashedPassword, password);
+        return verify(hashedPassword, password);
     }
 }
