@@ -4,6 +4,7 @@ import * as session from 'express-session';
 import * as process from 'node:process';
 import Redis from 'ioredis';
 import { RedisStore } from 'connect-redis';
+import * as passport from 'passport';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -14,7 +15,7 @@ async function bootstrap() {
             resave: false,
             saveUninitialized: false,
             store:
-                (process.env.NODE_ENV as string) !== 'development'
+                (process.env.NODE_ENV as string) === 'development'
                     ? undefined
                     : new RedisStore({
                           client: new Redis(
@@ -23,6 +24,8 @@ async function bootstrap() {
                       }),
         }),
     );
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     await app.listen(process.env.PORT ?? 3000);
 }
