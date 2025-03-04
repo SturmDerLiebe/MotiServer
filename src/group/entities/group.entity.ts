@@ -17,8 +17,8 @@ export class Group {
     @Column('simple-array', { nullable: true })
     memberIds: string[];
 
-    // @Column({ nullable: true })
-    // createdById: string;
+    @Column({ nullable: true })
+    createdById: string;
 
     @Column({ nullable: true })
     inviteCode: string;
