@@ -1,11 +1,25 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import {
+    ExecutionContext,
+    Injectable,
+    InternalServerErrorException,
+    Logger,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
-    async canActivate(context: ExecutionContext) {
-        const result = (await super.canActivate(context)) as boolean;
-        await super.logIn(context.switchToHttp().getRequest());
-        return result;
+    private readonly logger = new Logger(LocalAuthGuard.name);
+
+    async canActivate(context: ExecutionContext): Promise<boolean> {
+        const result = await super.canActivate(context);
+        if (result instanceof Observable) {
+            throw new InternalServerErrorException(
+                'An Observable is not supported here',
+            );
+        } else {
+            await super.logIn(context.switchToHttp().getRequest());
+            return result;
+        }
     }
 }
