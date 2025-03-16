@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { TempUserEntity } from './session-serializer.provider';
 
 @Injectable()
 export class AuthService {
-    validateUser(username: string, pass: string): boolean {
+    validateUser(username: string, pass: string): TempUserEntity | null {
         const user =
             username === 'TestUser'
-                ? { username, encPassword: 'TestPw' }
+                ? { id: '1', username, password: 'TestPw' }
                 : null; // TODO #26: get user by username form user.service
-        return user !== null && pass === user.encPassword; // TODO #31: use encrypted comparison
+        if (user !== null && pass === user.password) return user;
+        else return null; // TODO #31: use encrypted comparison
     }
 }
