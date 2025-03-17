@@ -28,6 +28,7 @@
         "@nestjs/passport": "^11.0.5",
         "@nestjs/platform-express": "^11.0.1",
         "passport": "^0.7.0",
+        "passport-fido2-webauthn": "^0.1.0",
         "passport-local": "^1.0.0",
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1"
