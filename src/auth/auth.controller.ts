@@ -3,6 +3,9 @@ import {
     Post,
     Headers,
     UnauthorizedException,
+    Body,
+    Put,
+    Param,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
@@ -21,5 +24,23 @@ export class AuthController {
         // const userId = await this.authService.authenticate(token);
 
         return { message: 'Token verified' };
+    }
+
+    @Post('register')
+    async register(
+        @Body('email') email: string,
+        @Body('password') password: string,
+    ) {
+        const user = await this.authService.createUser(email, password);
+        return { message: 'User registered successfully', user };
+    }
+
+    @Put('change-password/:id')
+    async changePassword(
+        @Param('id') userId: number,
+        @Body('newPassword') newPassword: string,
+    ) {
+        await this.authService.changePassword(userId, newPassword);
+        return { message: 'Password changed successfully' };
     }
 }
