@@ -9,6 +9,7 @@ import { EmailModule } from './email/email.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as process from 'node:process';
 import { RedisOptions } from 'ioredis';
+import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [
@@ -49,6 +50,7 @@ import { RedisOptions } from 'ioredis';
         AuthModule,
         ImageModule,
         EmailModule,
+        UsersModule,
     ],
     controllers: [AppController],
     providers: [AppService],
