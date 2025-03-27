@@ -3,5 +3,6 @@ import { SecurityProvider } from './security.provider';
 
 @Module({
     providers: [SecurityProvider],
+    exports: [SecurityProvider],
 })
 export class SecurityModule {}
