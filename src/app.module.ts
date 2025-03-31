@@ -4,10 +4,12 @@ import { AppService } from './app.service';
 import { VerificationModule } from './verification/verification.module';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
-import { SecurityModule } from './security/security.module';
+import { AuthService } from './auth/auth.service';
+import { LocalStrategy } from './auth/local.strategy';
+import { GroupModule } from './group/group.module';
 
 @Module({
-    imports: [PassportModule, VerificationModule, AuthModule, SecurityModule],
+    imports: [PassportModule, VerificationModule, AuthModule, GroupModule],
     controllers: [AppController],
     providers: [AppService],
 })
