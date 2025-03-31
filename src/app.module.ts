@@ -11,6 +11,6 @@ import { GroupModule } from './group/group.module';
 @Module({
     imports: [PassportModule, VerificationModule, AuthModule, GroupModule],
     controllers: [AppController],
-    providers: [AppService, AuthService, LocalStrategy],
+    providers: [AppService],
 })
 export class AppModule {}

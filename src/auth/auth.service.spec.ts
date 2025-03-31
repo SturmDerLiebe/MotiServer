@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
+import { SecurityProvider } from '../security/security.provider';
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -7,7 +8,19 @@ describe('AuthService', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [AuthService],
+            providers: [
+                AuthService,
+                {
+                    provide: SecurityProvider,
+                    useValue: {
+                        validatePassword(_: string, password: string) {
+                            return new Promise((resolve) =>
+                                resolve(password === existingUser.password),
+                            );
+                        },
+                    },
+                },
+            ],
         }).compile();
 
         service = module.get<AuthService>(AuthService);
@@ -26,7 +39,7 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).toBe(true);
+            expect(result).resolves.toBe(true);
         });
 
         it('should return false on nonexistent username', () => {
@@ -37,7 +50,7 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).toBe(false);
+            expect(result).resolves.toBe(false);
         });
 
         it('should return false on wrong password', () => {
@@ -48,7 +61,7 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).toBe(false);
+            expect(result).resolves.toBe(false);
         });
     });
 });

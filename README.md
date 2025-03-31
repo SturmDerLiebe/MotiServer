@@ -1,34 +1,69 @@
-# Collaboration
+# MotiMate Backend
 
-1. Every Contribution should be pushed to a separate Branch
-    1. The branch naming should follow the format `<TICKET_NUMBER>/<ShortTitleInPascalCase>` so for example `20/AddPasswordEncryption`
-    2. On the Issue your Branch is related to (if any) link your branch under the **Development**-segment
-2. Once you want to have your code merged into `main`, open a Pull Request from your branch onto `main`
-    1. After your Pull Request was reviewed and apporved after potential adjustments it, set it to **auto-merge** or press **merge**
+MotiMate is a backend service built with the [NestJS Framework](https://nestjs.com/) that enables users to set, track, and commit to their workout goals in a social and motivating environment. Users can join groups, participate in group chats, and contribute to a shared fund as part of an accountability system.
 
-## Project setup
+## Features
 
-```bash
-npm i -g @nestjs/cli
-npm install
-```
+- **User Authentication**: Secure authentication system for users.
+- **Workout Goal Setting**: Users can set their personal weekly workout goals (number of exercise days per week).
+- **Group Management**: Users can create or join groups to track goals together.
+- **Goal Commitment & Penalties**: Users commit to their weekly goals, and those who fail to meet their commitment must pay a penalty into the group fund.
+- **Group Fund & Payouts**: The collected fund can be used for group activities and payouts.
+- **Group Chat**: Messaging system for group communication, including text and image sharing.
+- **Workout Logging**: Users log workouts with a photo that is shared with the group.
 
-## Compile and run the project
+## Getting Started
 
-```bash
-# development
-npm run start
+### Prerequisites
 
-# watch mode
-npm run start:dev
+Ensure you have the following installed:
 
-# production mode
-npm run start:prod
-```
+- [Node.js](https://nodejs.org/) (LTS)
+- [NestJS CLI](https://docs.nestjs.com/cli/overview)
+    ```bash
+    npm i -g @nestjs/cli
+    ```
 
-## Run tests
+### Installation
 
-```bash
+1. Clone the repository:
+
+    ```sh
+    git clone https://github.com/your-repo/motimate-backend.git
+    cd motimate-backend
+    ```
+
+2. Install dependencies:
+
+    ```sh
+    npm install
+    ```
+
+3. Create an environment file and configure it with the variables available @SturmDerLiebe:
+
+    ```sh
+    touch .env.dev
+    ```
+
+### Running the Server
+
+- Start the development server with:
+
+    ```sh
+    npm run start:dev
+    ```
+
+The server will run at `http://localhost:3000` by default.
+
+- Start the Production server locally with:
+
+    ```sh
+    npm run start:prod
+    ```
+
+### Run tests
+
+```sh
 # unit tests
 npm run test
 
@@ -39,19 +74,31 @@ npm run test:e2e
 npm run test:cov
 ```
 
-## Deployment
+## Tech Stack
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- **Framework**: NestJS
+- **Database**: PostgreSQL
+- **ORM**: TypeORM
+- **Authentication**: Session-based authentication
+- **Messaging**: WebSockets for real-time chat
 
-## Resources
+## Contributing
 
-Check out a few resources that may come in handy when working with NestJS:
+If you are part of the MotiMate Team:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+1. Create a branch based on `main` locally
+    1. The branch naming should follow the format `<TICKET_NUMBER>/<ShortTitleInPascalCase>` so for example `20/AddPasswordEncryption`
+2. Push your changes from that branch
+3. Create a Pull Request from with that branch onto `main`. Make sure to connect the ticket with your related branch
+
+---
+
+We also welcome external contributions! Please fork the repository and create a pull request with your changes.
+
+## License
+
+This project is licensed under the GPL-3.0 License.
+
+---
+
+For any questions or support, reach out to the MotiMate team!
