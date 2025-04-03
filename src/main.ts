@@ -8,7 +8,6 @@ import * as passport from 'passport';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-
     app.use(
         session({
             secret: process.env.SESSION_SECRET as string,
@@ -19,7 +18,7 @@ async function bootstrap() {
                     ? undefined
                     : new RedisStore({
                           client: new Redis(
-                              process.env.UPSTASH_SESSION_REDIS_URL as string,
+                              process.env.UPSTASH_REDIS_SESSION_URL as string,
                           ),
                       }),
         }),
