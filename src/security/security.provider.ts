@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { verify, hash } from 'argon2';
+import { hash, verify } from 'argon2';
 
 @Injectable()
 export class SecurityProvider {
@@ -11,6 +11,10 @@ export class SecurityProvider {
         hashedPassword: string,
         password: string,
     ): Promise<boolean> {
-        return verify(hashedPassword, password);
+        return (
+            verify(hashedPassword, password)
+                // NOTE: This happens when hashedPassword is of wrong format according to argon2
+                .catch(() => false)
+        );
     }
 }
