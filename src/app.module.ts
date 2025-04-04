@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { VerificationModule } from './verification/verification.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ImageModule } from './image/image.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
         }),
         VerificationModule,
         AuthModule,
+        ImageModule,
     ],
     controllers: [AppController],
     providers: [AppService],
