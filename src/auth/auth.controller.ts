@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.input';
 import { LocalAuthGuard } from './local-auth.guard';
 import { Request } from 'express';
-import { Public } from './dto/public.decorator';
+import { Public } from './public.decorator';
 
 @Controller('auth')
 export class AuthController {
