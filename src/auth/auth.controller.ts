@@ -1,25 +1,38 @@
 import {
+    Body,
     Controller,
+    Delete,
+    HttpCode,
     Post,
-    Headers,
-    UnauthorizedException,
+    Req,
+    UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { RegisterUserDto } from './dto/register-user.input';
+import { LocalAuthGuard } from './local-auth.guard';
+import { Request } from 'express';
+import { Public } from './public.decorator';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Post('verify')
-    verifyToken(@Headers('authorization') authHeader: string) {
-        if (!authHeader) {
-            throw new UnauthorizedException('Authorization header is missing');
-        }
+    @Public()
+    @Post('register')
+    register(@Body() body: RegisterUserDto) {
+        return body.username; // TODO #26 : Call UserService.createUser() here instead
+    }
 
-        const token = authHeader.replace('Bearer ', '');
-        void token; // TODO #16: Will be replaced and implemented properly
-        // const userId = await this.authService.authenticate(token);
+    @Public()
+    @UseGuards(LocalAuthGuard)
+    @HttpCode(204)
+    @Post('login')
+    login() {
+        // TODO: Full Endpoint is done in #16
+    }
 
-        return { message: 'Token verified' };
+    @Delete('logout')
+    logout(@Req() request: Request) {
+        request.logout(() => {});
     }
 }

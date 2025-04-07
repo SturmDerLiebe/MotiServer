@@ -79,5 +79,4 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
-}
+  }}
