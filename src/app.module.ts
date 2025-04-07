@@ -3,13 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VerificationModule } from './verification/verification.module';
 import { AuthModule } from './auth/auth.module';
-import { PassportModule } from '@nestjs/passport';
-import { AuthService } from './auth/auth.service';
-import { LocalStrategy } from './auth/local.strategy';
+import { ConfigModule } from '@nestjs/config';
+import { ImageModule } from './image/image.module';
 
 @Module({
-    imports: [PassportModule, VerificationModule, AuthModule],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: ['.env', '.env.development'],
+        }),
+        VerificationModule,
+        AuthModule,
+        ImageModule,
+    ],
     controllers: [AppController],
-    providers: [AppService, AuthService, LocalStrategy],
+    providers: [AppService],
 })
 export class AppModule {}
