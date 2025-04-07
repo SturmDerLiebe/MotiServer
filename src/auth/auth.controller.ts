@@ -6,8 +6,13 @@ import {
     Body,
     Put,
     Param,
+    BadRequestException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import {
+    RegistrationResponseJSON,
+    AuthenticationResponseJSON,
+} from '@simplewebauthn/server/script/deps';
 
 @Controller('auth')
 export class AuthController {
@@ -31,8 +36,12 @@ export class AuthController {
         @Body('email') email: string,
         @Body('password') password: string,
     ) {
-        const user = await this.authService.createUser(email, password);
-        return { message: 'User registered successfully', user };
+        try {
+            const user = await this.authService.createUser(email, password);
+            return { message: 'User registered successfully', user };
+        } catch {
+            throw new BadRequestException('Error registering user');
+        }
     }
 
     @Put('change-password/:id')
@@ -40,7 +49,77 @@ export class AuthController {
         @Param('id') userId: number,
         @Body('newPassword') newPassword: string,
     ) {
-        await this.authService.changePassword(userId, newPassword);
-        return { message: 'Password changed successfully' };
+        try {
+            await this.authService.changePassword(userId, newPassword);
+            return { message: 'Password changed successfully' };
+        } catch {
+            throw new BadRequestException('Error changing password');
+        }
+    }
+
+    // webauthn registration
+    @Post('webauthn/register')
+    async webauthnRegister(@Body('userId') userId: string) {
+        try {
+            const options =
+                await this.authService.generateRegistrationOptions(userId);
+            return { options };
+        } catch {
+            throw new BadRequestException(
+                'Error generating registration options',
+            );
+        }
+    }
+
+    @Post('webauthn/register/verify')
+    async webauthnRegisterVerify(
+        @Body() response: RegistrationResponseJSON,
+        @Body('userId') userId: string,
+    ) {
+        try {
+            const verification =
+                await this.authService.verifyRegistrationResponse(
+                    response,
+                    userId,
+                );
+            return { verification };
+        } catch {
+            throw new UnauthorizedException(
+                'Error verifying registration response',
+            );
+        }
+    }
+
+    // webauthn authentication
+    @Post('webauthn/authenticate')
+    async webauthnAuthenticate(@Body('userId') userId: string) {
+        try {
+            const options =
+                await this.authService.generateAuthenticationOptions(userId);
+            return { options };
+        } catch {
+            throw new BadRequestException(
+                'Error generating authentication options',
+            );
+        }
+    }
+
+    @Post('webauthn/authenticate/verify')
+    async webauthnAuthenticateVerify(
+        @Body() response: AuthenticationResponseJSON,
+        @Body('userId') userId: string,
+    ) {
+        try {
+            const verification =
+                await this.authService.verifyAuthenticationResponse(
+                    response,
+                    userId,
+                );
+            return { verification };
+        } catch {
+            throw new UnauthorizedException(
+                'Error verifying authentication response',
+            );
+        }
     }
 }
