@@ -31,7 +31,7 @@ describe('AuthService', () => {
     });
 
     describe('validateUser', () => {
-        it('should return true on correct credentials', () => {
+        it('should return User Data on correct credentials', () => {
             // WHEN
             const result = service.validateUser(
                 existingUser.username,
@@ -39,10 +39,10 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).resolves.toBe(true);
+            void expect(result).resolves.not.toBeNull();
         });
 
-        it('should return false on nonexistent username', () => {
+        it('should return null on nonexistent username', () => {
             // WHEN
             const result = service.validateUser(
                 'wrongUsername',
@@ -50,10 +50,10 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).resolves.toBe(false);
+            void expect(result).resolves.toBeNull();
         });
 
-        it('should return false on wrong password', () => {
+        it('should return null on wrong password', () => {
             // WHEN
             const result = service.validateUser(
                 existingUser.username,
@@ -61,7 +61,7 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).resolves.toBe(false);
+            void expect(result).resolves.toBeNull();
         });
     });
 });
