@@ -6,6 +6,8 @@ import {
     Param,
     Put,
     Delete,
+    HttpCode,
+    HttpStatus,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
@@ -26,8 +28,29 @@ export class GroupController {
     }
 
     @Post()
-    create(@Body() createGroupDto: CreateGroupDto) {
-        return this.groupService.create(createGroupDto);
+    @HttpCode(HttpStatus.CREATED)
+    async create(@Body() createGroupDto: CreateGroupDto) {
+        const group = await this.groupService.create(createGroupDto);
+
+        // return group details with invite code
+        return {
+            message: 'Group created successfully',
+            group: {
+                id: group.id,
+                groupName: group.groupName,
+                inviteCode: group.inviteCode,
+            },
+        };
+    }
+
+    @Post(':id/join')
+    @HttpCode(HttpStatus.OK)
+    async join(@Param('id') groupId: string, @Body('userId') userId: string) {
+        await this.groupService.joinGroup(groupId, userId);
+        // success message
+        return {
+            message: `User with ID ${userId} has successfully joined the group with ID ${groupId}`,
+        };
     }
 
     @Put(':id')
