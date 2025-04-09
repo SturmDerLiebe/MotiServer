@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Group } from './entities/group.entity';
@@ -36,7 +40,7 @@ export class GroupService {
     }
 
     async update(id: string, updateGroupDto: UpdateGroupDto) {
-        await this.findOne(id); // Check if exists
+        await this.findOne(id);
         await this.groupRepository.update(id, updateGroupDto);
         return this.findOne(id);
     }
@@ -49,6 +53,44 @@ export class GroupService {
         }
 
         return { deleted: true };
+    }
+
+    async joinGroup(groupId: string, userId: string) {
+        const group = await this.findOne(groupId);
+
+        if (!group.memberIds) {
+            group.memberIds = [];
+        }
+
+        if (group.memberIds.includes(userId)) {
+            throw new BadRequestException(
+                `User with ID ${userId} is already a member of the group`,
+            );
+        }
+
+        // add member
+        group.memberIds.push(userId);
+        await this.groupRepository.save(group);
+
+        return { message: `User with ID ${userId} has joined the group` };
+    }
+
+    async leaveGroup(groupId: string, userId: string) {
+        const group = await this.findOne(groupId);
+
+        if (!group.memberIds || !group.memberIds.includes(userId)) {
+            throw new BadRequestException(
+                `User with ID ${userId} is not a member of the group`,
+            );
+        }
+
+        // remove member
+        group.memberIds = group.memberIds.filter(
+            (memberId) => memberId !== userId,
+        );
+        await this.groupRepository.save(group);
+
+        return { message: `User with ID ${userId} has left the group` };
     }
 
     private generateInviteCode(): string {
