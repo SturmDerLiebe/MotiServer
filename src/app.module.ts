@@ -5,6 +5,7 @@ import { VerificationModule } from './verification/verification.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ImageModule } from './image/image.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
     imports: [
@@ -15,6 +16,7 @@ import { ImageModule } from './image/image.module';
         VerificationModule,
         AuthModule,
         ImageModule,
+        EmailModule,
     ],
     controllers: [AppController],
     providers: [AppService],
