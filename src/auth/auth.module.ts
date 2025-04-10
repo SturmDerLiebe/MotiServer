@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
+
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
 import { AuthService } from './auth.service';
 import { SecurityModule } from '../security/security.module';
 import { LocalStrategy } from './local.strategy';
@@ -9,7 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { SessionAuthGuard } from './session-auth.guard';
 
 @Module({
-    imports: [SecurityModule, PassportModule.register({ session: true })],
+    imports: [SecurityModule, TypeOrmModule.forFeature([User]), PassportModule.register({ session: true })],
     controllers: [AuthController],
     providers: [
         AuthService,
