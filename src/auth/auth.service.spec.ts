@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
+import { SecurityProvider } from '../security/security.provider';
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -7,7 +8,19 @@ describe('AuthService', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [AuthService],
+            providers: [
+                AuthService,
+                {
+                    provide: SecurityProvider,
+                    useValue: {
+                        validatePassword(_: string, password: string) {
+                            return new Promise((resolve) =>
+                                resolve(password === existingUser.password),
+                            );
+                        },
+                    },
+                },
+            ],
         }).compile();
 
         service = module.get<AuthService>(AuthService);
@@ -18,7 +31,7 @@ describe('AuthService', () => {
     });
 
     describe('validateUser', () => {
-        it('should return true on correct credentials', () => {
+        it('should return User Data on correct credentials', () => {
             // WHEN
             const result = service.validateUser(
                 existingUser.username,
@@ -26,10 +39,10 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).toBe(true);
+            void expect(result).resolves.not.toBeNull();
         });
 
-        it('should return false on nonexistent username', () => {
+        it('should return null on nonexistent username', () => {
             // WHEN
             const result = service.validateUser(
                 'wrongUsername',
@@ -37,10 +50,10 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).toBe(false);
+            void expect(result).resolves.toBeNull();
         });
 
-        it('should return false on wrong password', () => {
+        it('should return null on wrong password', () => {
             // WHEN
             const result = service.validateUser(
                 existingUser.username,
@@ -48,7 +61,7 @@ describe('AuthService', () => {
             );
 
             //THEN
-            expect(result).toBe(false);
+            void expect(result).resolves.toBeNull();
         });
     });
 });
