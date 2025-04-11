@@ -28,6 +28,7 @@
         "@nestjs/core": "^11.0.1",
         "@nestjs/passport": "^11.0.5",
         "@nestjs/platform-express": "^11.0.1",
+        "@nestjs/typeorm": "^11.0.0",
         "@supabase/supabase-js": "^2.49.4",
         "argon2": "^0.41.1",
         "connect-redis": "^8.0.1",
@@ -35,8 +36,10 @@
         "ioredis": "^5.5.0",
         "passport": "^0.7.0",
         "passport-local": "^1.0.0",
+        "pg": "^8.14.1",
         "reflect-metadata": "^0.2.2",
-        "rxjs": "^7.8.1"
+        "rxjs": "^7.8.1",
+        "typeorm": "^0.3.22"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.2.0",
