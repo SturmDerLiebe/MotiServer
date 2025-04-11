@@ -7,6 +7,7 @@ export class CreateGroupDto {
 
     @IsOptional()
     @IsArray()
+    @IsString({ each: true })
     memberIds?: string[];
 
     @IsOptional()
