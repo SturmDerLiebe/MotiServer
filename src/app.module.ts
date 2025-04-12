@@ -8,12 +8,35 @@ import { GroupModule } from './group/group.module';
 import { ConfigModule } from '@nestjs/config';
 import { ImageModule } from './image/image.module';
 import { EmailModule } from './email/email.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as process from 'node:process';
+import { RedisOptions } from 'ioredis';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: ['.env', '.env.development'],
+        }),
+        TypeOrmModule.forRoot({
+            type: 'postgres',
+            host: process.env.PGHOST as string,
+            port: parseInt(process.env.PGPORT as string, 10),
+            username: process.env.PGUSER as string,
+            password: process.env.PGPASSWORD as string,
+            database: process.env.PGDATABSE as string,
+            entities: [],
+            synchronize: process.env.NODE_ENV === 'development',
+            cache:
+                process.env.NODE_ENV === 'development'
+                    ? true
+                    : {
+                          type: 'ioredis',
+                          options: {
+                              keyPrefix: 'cache',
+                          } satisfies RedisOptions,
+                          ignoreErrors: process.env.NODE_ENV === 'production',
+                      },
         }),
         VerificationModule,
         AuthModule,
