@@ -14,30 +14,36 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-	constructor (private usersService: UsersService) {}
+    constructor(private usersService: UsersService) {}
 
-    @Post()
+    @Post('new')
     create(@Body() createUserDto: CreateUserDto) {
-		return this.usersService.create(createUserDto);
+        return this.usersService.create(createUserDto);
     }
     @Get()
     // TODO: implement authorization and admin guard
-    findAll(): Map<number, CreateUserDto> {
-		return this.usersService.findAll();
+    findAll() {
+        return this.usersService.findAll();
     }
     @Get(':id')
     // TODO: implement authorization and user guard
-    findOne(@Param('id') id: number): Map<number, CreateUserDto> {
-		return this.usersService.findOne(id) || "user not found";
+    findOne(@Param('id') id: number): any {
+        return this.usersService.findOne(id) || 'user not found';
     }
     @Put(':id')
     // TODO: implement authorization and user guard
     update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
-		return this.usersService.update(id, updateUserDto);
+        if (this.usersService.update(id, updateUserDto)) {
+            return 'user updated';
+        } else {
+            return 'user not updated';
+        }
     }
     @Delete(':id')
     // TODO: implement authorization and user guard
     remove(@Param('id') id: number) {
-		return this.usersService.remove(id);
-	}
+        return this.usersService.remove(id)
+            ? 'user deleted'
+            : 'user could not be deleted';
+    }
 }
