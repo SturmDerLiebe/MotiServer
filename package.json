@@ -20,7 +20,7 @@
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
-        "ci-workflow": "npm run check-format && npm run lint && npm run test"
+        "ci-workflow": "npm run check-format && npm run lint && npm run test && npm run start"
     },
     "dependencies": {
         "@nestjs/common": "^11.0.1",
