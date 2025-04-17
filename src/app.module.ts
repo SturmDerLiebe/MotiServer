@@ -18,11 +18,12 @@ import { RedisOptions } from 'ioredis';
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
+            ssl: true,
             host: process.env.PGHOST as string,
             port: parseInt(process.env.PGPORT as string, 10),
             username: process.env.PGUSER as string,
             password: process.env.PGPASSWORD as string,
-            database: process.env.PGDATABSE as string,
+            database: process.env.PGDATABASE as string,
             entities: [],
             synchronize: process.env.NODE_ENV === 'development',
             cache:
