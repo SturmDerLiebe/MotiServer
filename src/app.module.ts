@@ -33,6 +33,8 @@ import { RedisOptions } from 'ioredis';
                           type: 'ioredis',
                           options: {
                               keyPrefix: 'cache',
+                              path: process.env
+                                  .UPSTASH_REDIS_SESSION_URL as string,
                           } satisfies RedisOptions,
                           ignoreErrors: process.env.NODE_ENV === 'production',
                       },
