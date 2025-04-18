@@ -9,6 +9,7 @@ import { EmailModule } from './email/email.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as process from 'node:process';
 import { RedisOptions } from 'ioredis';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
     imports: [
@@ -40,6 +41,7 @@ import { RedisOptions } from 'ioredis';
         AuthModule,
         ImageModule,
         EmailModule,
+        PassportModule.register({ defaultStrategy: 'fido2' }),
     ],
     controllers: [AppController],
     providers: [AppService],
