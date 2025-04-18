@@ -5,7 +5,7 @@ import { Challenge } from './challenge.entity';
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: bigint;
 
     @Column({ unique: true })
     email: string;

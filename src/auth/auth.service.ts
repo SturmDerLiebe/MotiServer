@@ -68,7 +68,7 @@ export class AuthService {
 
     async generateRegistrationOptions(userId: string): Promise<Challenge> {
         const user = await this.userRepository.findOne({
-            where: { id: Number(userId) },
+            where: { id: BigInt(userId.toString()) },
         });
         if (!user) {
             throw new UnauthorizedException('User not found');
@@ -96,7 +96,7 @@ export class AuthService {
         userId: string,
     ) {
         const challenge = await this.challengeRepository.findOne({
-            where: { user: { id: Number(userId) } },
+            where: { user: { id: BigInt(userId.toString()) } },
         });
 
         if (!challenge) throw new UnauthorizedException('Challenge not found');
@@ -115,7 +115,7 @@ export class AuthService {
 
     async generateAuthenticationOptions(userId: string): Promise<Challenge> {
         const user = await this.userRepository.findOne({
-            where: { id: Number(userId) },
+            where: { id: BigInt(userId.toString()) },
         });
         if (!user) {
             throw new UnauthorizedException('User not found');
@@ -141,7 +141,7 @@ export class AuthService {
         userId: string,
     ) {
         const challenge = await this.challengeRepository.findOne({
-            where: { user: { id: Number(userId) } },
+            where: { user: { id: BigInt(userId.toString()) } },
         });
 
         if (!challenge) throw new UnauthorizedException('Challenge not found');

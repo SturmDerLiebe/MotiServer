@@ -18,14 +18,15 @@ export class Fido2Strategy extends PassportStrategy(PassportFido2Strategy) {
         private readonly configService: ConfigService,
     ) {
         super(
-            { store: new SessionChallengeStore() } satisfies StrategyOptions, 
-            async function verify(
-                userHandle: string,
+            { store: new SessionChallengeStore() } satisfies StrategyOptions,
+            async (
+                id: string,
+                userHandle: Buffer,
                 cb: (error: any, user?: User) => void,
             ) => {
                 try {
                     const user = await this.userRepository.findOne({
-                        where: { id: userHandle },
+                        where: { id: BigInt(userHandle.toString()) },
                     });
                     if (!user) {
                         return cb(new UnauthorizedException('User not found'));
@@ -58,7 +59,3 @@ export class Fido2Strategy extends PassportStrategy(PassportFido2Strategy) {
         }
     }
 }
-function cb(arg0: UnauthorizedException) {
-    throw new Error('Function not implemented.');
-}
-
