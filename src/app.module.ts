@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VerificationModule } from './verification/verification.module';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { ImageModule } from './image/image.module';
 import { EmailModule } from './email/email.module';
@@ -50,7 +50,7 @@ import { RedisOptions } from 'ioredis';
         AuthModule,
         ImageModule,
         EmailModule,
-        UsersModule,
+        UserModule,
     ],
     controllers: [AppController],
     providers: [AppService],
