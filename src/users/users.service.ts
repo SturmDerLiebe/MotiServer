@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './interfaces/user.interface';
 
+//TODO: #26 - Overhaul Service methods according to use cases
 @Injectable()
 export class UsersService {
     //TODO: #26 - remove users and userIDcounter when implementing UserService properly
