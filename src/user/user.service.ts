@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './interfaces/user.interface';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 //TODO: #26 - Overhaul Service methods according to use cases
 @Injectable()
@@ -27,10 +28,16 @@ export class UserService {
         // parseInt will not work because the defined type is already "number"
         return this.users.get(+userID);
     }
-    update(userID: number, user: User): boolean {
+    update(userID: number, user: UpdateUserDto): boolean {
         // TODO: #26 - update user in DB
         if (this.users.has(+userID)) {
-            this.users.set(+userID, user);
+            const old_user = this.users.get(+userID)!;
+            const new_user: User = {
+                name: user.name || old_user.name,
+                email: user.email || old_user.email,
+                password: user.password || old_user.password,
+            };
+            this.users.set(+userID, new_user);
             return true;
         } else {
             return this.users.has(+userID);
