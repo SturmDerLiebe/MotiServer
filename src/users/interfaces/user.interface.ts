@@ -1,3 +1,4 @@
+//TODO: #24 - Remove this file and replace interface with User Entity Class
 export interface User {
     name: string;
     email: string;
