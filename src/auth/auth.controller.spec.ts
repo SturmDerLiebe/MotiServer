@@ -75,7 +75,7 @@ describe('AuthController', () => {
                 expiresAt: new Date(),
                 createdAt: new Date(),
                 user: {
-                    id: 1,
+                    id: BigInt('1'.toString()),
                     email: 'test@test.com',
                     password: 'hashed',
                     passkeys: [],
@@ -194,7 +194,7 @@ describe('AuthController', () => {
                 expiresAt: new Date(),
                 createdAt: new Date(),
                 user: {
-                    id: 1,
+                    id: BigInt('1'.toString()),
                     email: 'test@test.com',
                     password: 'hashed',
                     passkeys: [],
