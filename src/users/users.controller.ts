@@ -11,7 +11,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
-@Controller('users')
+//TODO: #34 - Overhaul Controller methods according to use cases
+@Controller('user')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
