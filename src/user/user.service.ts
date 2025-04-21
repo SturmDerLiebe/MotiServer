@@ -3,7 +3,7 @@ import { User } from './interfaces/user.interface';
 
 //TODO: #26 - Overhaul Service methods according to use cases
 @Injectable()
-export class UsersService {
+export class UserService {
     //TODO: #26 - remove users and userIDcounter when implementing UserService properly
     private users: Map<number, User> = new Map();
     private userIDcounter: number = 0;
