@@ -28,7 +28,7 @@ describe('AuthService', () => {
     let challengeRepository: Repository<Challenge>;
 
     const mockUser = {
-        id: 123,
+        id: BigInt('123'.toString()),
         email: 'test@example.com',
         password: 'hashed',
     } as User;
@@ -148,7 +148,11 @@ describe('AuthService', () => {
             // return a user
             jest.spyOn(userRepository, 'findOne').mockResolvedValue(mockUser);
 
-            console.log(await userRepository.findOne({ where: { id: 123 } }));
+            console.log(
+                await userRepository.findOne({
+                    where: { id: BigInt('123'.toString()) },
+                }),
+            );
 
             // create and save a challenge
             jest.spyOn(challengeRepository, 'create').mockReturnValue(
