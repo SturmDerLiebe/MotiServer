@@ -62,6 +62,7 @@ describe('AuthService', () => {
                         findOne: jest.fn(),
                         create: jest.fn(),
                         save: jest.fn(),
+                        delete: jest.fn(),
                     },
                 },
                 {
@@ -167,7 +168,7 @@ describe('AuthService', () => {
 
             // THEN
             expect(userRepository.findOne).toHaveBeenCalledWith({
-                where: { id: 123 },
+                where: { id: BigInt('123'.toString()) },
             });
             expect(challengeRepository.create).toHaveBeenCalledWith({
                 user: mockUser,
@@ -188,7 +189,7 @@ describe('AuthService', () => {
                 service.generateRegistrationOptions('123'),
             ).rejects.toThrow(UnauthorizedException);
             expect(userRepository.findOne).toHaveBeenCalledWith({
-                where: { id: 123 },
+                where: { id: BigInt('123'.toString()) },
             });
         });
     });
