@@ -12,7 +12,7 @@ import { GroupChallenge } from '../../group-challenge/entities/group-challenge.e
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
-export class Group{
+export class Group {
   	@PrimaryGeneratedColumn()
   	group_id: number;
   
