@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { GroupChallenge } from '../../group-challenge/entities/group-challenge.entity';
@@ -30,6 +31,6 @@ export class UserWeeklyTarget {
   	user: User;
   
   	@ManyToOne(() => GroupChallenge, groupChallenge => groupChallenge.userTargets)
-  	@JoinColumn({ name: 'group_challenge_id' })
+  	@JoinColumn({ name: 'group_challenge_id' })
   	groupChallenge: GroupChallenge;
 }
