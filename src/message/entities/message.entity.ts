@@ -11,7 +11,6 @@ import { User } from '../../user/entities/user.entity';
 import { Group } from '../../group/entities/group.entity';
 import { MessageReaction } from '../../message-reaction/entities/message-reaction.entity';
 
-
 @Entity()
 export class Message {
     @PrimaryGeneratedColumn()
@@ -33,11 +32,11 @@ export class Message {
     sent_at: Date;
 
     @ManyToOne(() => User, (user) => user.messages)
-    @JoinColumn({ name: "sender_id" })
+    @JoinColumn({ name: 'sender_id' })
     sender: User;
 
     @ManyToOne(() => Group, (group) => group.messages)
-    @JoinColumn({ name: "group_id" })
+    @JoinColumn({ name: 'group_id' })
     group: Group;
 
     @OneToMany(() => MessageReaction, (reaction) => reaction.message)
