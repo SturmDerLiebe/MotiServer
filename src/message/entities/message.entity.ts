@@ -7,9 +7,9 @@ import {
     JoinColumn,
     CreateDateColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
-import { Group } from '../group/group.entity';
-import { MessageReaction } from '../message-reaction/message-reaction.entity';
+import { User } from '../../user/entities/user.entity';
+import { Group } from '../../group/entities/group.entity';
+import { MessageReaction } from '../../message-reaction/entities/message-reaction.entity';
 
 
 @Entity()
