@@ -10,6 +10,13 @@ import { EmailModule } from './email/email.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as process from 'node:process';
 import { RedisOptions } from 'ioredis';
+import { MessageModule } from './message/message.module';
+import { MessageReactionModule } from './message-reaction/message-reaction.module';
+import { GroupModule } from './group/group.module';
+import { GroupMemberModule } from './group-member/group-member.module';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { GroupChallengeModule } from './group-challenge/group-challenge.module';
+import { UserWeeklyTargetModule } from './user-weekly-target/user-weekly-target.module';
 
 @Module({
     imports: [
@@ -51,6 +58,13 @@ import { RedisOptions } from 'ioredis';
         ImageModule,
         EmailModule,
         UserModule,
+        MessageModule,
+        MessageReactionModule,
+        GroupModule,
+        GroupMemberModule,
+        AuthenticationModule,
+        GroupChallengeModule,
+        UserWeeklyTargetModule,
     ],
     controllers: [AppController],
     providers: [AppService],
