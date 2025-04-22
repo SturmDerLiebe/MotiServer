@@ -3,18 +3,20 @@ import { MessageReactionController } from './message-reaction.controller';
 import { MessageReactionService } from './message-reaction.service';
 
 describe('MessageReactionController', () => {
-  let controller: MessageReactionController;
+    let controller: MessageReactionController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [MessageReactionController],
-      providers: [MessageReactionService],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            controllers: [MessageReactionController],
+            providers: [MessageReactionService],
+        }).compile();
 
-    controller = module.get<MessageReactionController>(MessageReactionController);
-  });
+        controller = module.get<MessageReactionController>(
+            MessageReactionController,
+        );
+    });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+    it('should be defined', () => {
+        expect(controller).toBeDefined();
+    });
 });

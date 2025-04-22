@@ -3,18 +3,18 @@ import { GroupController } from './group.controller';
 import { GroupService } from './group.service';
 
 describe('GroupController', () => {
-  let controller: GroupController;
+    let controller: GroupController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [GroupController],
-      providers: [GroupService],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            controllers: [GroupController],
+            providers: [GroupService],
+        }).compile();
 
-    controller = module.get<GroupController>(GroupController);
-  });
+        controller = module.get<GroupController>(GroupController);
+    });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+    it('should be defined', () => {
+        expect(controller).toBeDefined();
+    });
 });

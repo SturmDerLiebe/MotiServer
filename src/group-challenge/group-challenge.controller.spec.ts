@@ -3,18 +3,20 @@ import { GroupChallengeController } from './group-challenge.controller';
 import { GroupChallengeService } from './group-challenge.service';
 
 describe('GroupChallengeController', () => {
-  let controller: GroupChallengeController;
+    let controller: GroupChallengeController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [GroupChallengeController],
-      providers: [GroupChallengeService],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            controllers: [GroupChallengeController],
+            providers: [GroupChallengeService],
+        }).compile();
 
-    controller = module.get<GroupChallengeController>(GroupChallengeController);
-  });
+        controller = module.get<GroupChallengeController>(
+            GroupChallengeController,
+        );
+    });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+    it('should be defined', () => {
+        expect(controller).toBeDefined();
+    });
 });
