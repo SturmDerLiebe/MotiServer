@@ -22,7 +22,7 @@ export class UserWeeklyTarget {
   	@Column({ length: 255 })
   	current_progress: string;
   
-  	@CreateDateColumn()1q
+  	@CreateDateColumn()
   	created_at: Date;
   
   	@ManyToOne(() => User, user => user.weeklyTargets)
