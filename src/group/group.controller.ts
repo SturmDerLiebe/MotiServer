@@ -17,11 +17,6 @@ import { UpdateGroupDto } from './dto/update-group.dto';
 export class GroupController {
     constructor(private readonly groupService: GroupService) {}
 
-    @Get()
-    findAll() {
-        return this.groupService.findAll();
-    }
-
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.groupService.findOne(id);
@@ -52,6 +47,8 @@ export class GroupController {
             message: `User with ID ${userId} has successfully joined the group with ID ${groupId}`,
         };
     }
+
+    // TODO #98: Add missing endpoints
 
     @Put(':id')
     update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
