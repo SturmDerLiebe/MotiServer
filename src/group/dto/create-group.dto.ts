@@ -9,12 +9,4 @@ export class CreateGroupDto {
     @IsArray()
     @IsString({ each: true })
     memberIds?: string[];
-
-    @IsOptional()
-    @IsString()
-    createdById?: string;
-
-    @IsOptional()
-    @IsString()
-    inviteCode?: string;
 }
