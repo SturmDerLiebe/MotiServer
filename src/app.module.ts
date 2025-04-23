@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VerificationModule } from './verification/verification.module';
 import { AuthModule } from './auth/auth.module';
+import { GroupModule } from './group/group.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { ImageModule } from './image/image.module';
@@ -50,6 +51,7 @@ import { RedisOptions } from 'ioredis';
         AuthModule,
         ImageModule,
         EmailModule,
+        GroupModule,
         UserModule,
     ],
     controllers: [AppController],
