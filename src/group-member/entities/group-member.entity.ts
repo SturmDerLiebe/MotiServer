@@ -6,7 +6,7 @@ import {
     JoinColumn,
     CreateDateColumn,
 } from 'typeorm';
-import { User } from '../../user//entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { Group } from '../../group/entities/group.entity';
 
 @Entity()
