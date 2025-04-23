@@ -9,6 +9,8 @@ import { Group } from './entities/group.entity';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 
+// TODO: #57 Add Group Service
+
 @Injectable()
 export class GroupService {
     constructor(
@@ -33,7 +35,6 @@ export class GroupService {
     create(createGroupDto: CreateGroupDto) {
         const group = this.groupRepository.create({
             ...createGroupDto,
-            inviteCode: createGroupDto.inviteCode || this.generateInviteCode(),
         });
 
         return this.groupRepository.save(group);
