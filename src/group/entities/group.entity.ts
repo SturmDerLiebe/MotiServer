@@ -6,6 +6,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
+// TODO: #78 Add Group Entity
 @Entity('groups')
 export class Group {
     @PrimaryGeneratedColumn('uuid')
@@ -14,13 +15,13 @@ export class Group {
     @Column()
     groupName: string;
 
-    // Temporary column for member IDs (to be replaced by ManyToMany relationship)
+    // TODO: #97 Temporary column for member IDs (to be replaced by ManyToMany relationship)
     @Column('simple-array', { nullable: true })
     memberIds: string[]; // TODO: Replace with ManyToMany relationship with User entity
 
-    // Temporary column for creator ID (to be replaced by ManyToOne relationship)
+    // TODO: #97  Temporary column for creator ID (to be replaced by ManyToOne relationship)
     @Column({ nullable: true })
-    createdById: string; // TODO: Replace with ManyToOne relationship with User entity
+    createdById: string;
 
     @Column({ nullable: true })
     inviteCode: string;
