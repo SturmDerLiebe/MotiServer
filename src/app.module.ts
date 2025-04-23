@@ -19,11 +19,12 @@ import { RedisOptions } from 'ioredis';
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
+            ssl: true,
             host: process.env.PGHOST as string,
             port: parseInt(process.env.PGPORT as string, 10),
             username: process.env.PGUSER as string,
             password: process.env.PGPASSWORD as string,
-            database: process.env.PGDATABSE as string,
+            database: process.env.PGDATABASE as string,
             entities: [],
             synchronize: process.env.NODE_ENV === 'development',
             cache:
@@ -33,6 +34,14 @@ import { RedisOptions } from 'ioredis';
                           type: 'ioredis',
                           options: {
                               keyPrefix: 'cache',
+                              host: process.env.UPSTASH_REDIS_HOST as string,
+                              password: process.env
+                                  .UPSTASH_REDIS_PASSWORD as string,
+                              port: parseInt(
+                                  process.env.UPSTASH_REDIS_PORT as string,
+                                  10,
+                              ),
+                              tls: {},
                           } satisfies RedisOptions,
                           ignoreErrors: process.env.NODE_ENV === 'production',
                       },
