@@ -14,8 +14,8 @@ import { Group } from '../../group/entities/group.entity';
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    user_id: number;
+    @PrimaryGeneratedColumn({ type: 'bigint' })
+    user_id: string;
 
     @Column({ length: 255 })
     name: string;
