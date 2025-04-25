@@ -5,7 +5,7 @@ import {
     OneToOne,
     OneToMany,
 } from 'typeorm';
-import { Authentication } from '../../authentication/entities/authentication.entity';
+import { Authentication } from '../../google-oauth/entities/authentication.entity';
 import { Message } from '../../message/entities/message.entity';
 import { GroupMember } from '../../group-member/entities/group-member.entity';
 import { MessageReaction } from '../../message-reaction/entities/message-reaction.entity';
