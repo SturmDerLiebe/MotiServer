@@ -11,8 +11,8 @@ import { GroupMember } from '../../group-member/entities/group-member.entity';
 import { MessageReaction } from '../../message-reaction/entities/message-reaction.entity';
 import { UserWeeklyTarget } from '../../user-weekly-target/entities/user-weekly-target.entity';
 import { Group } from '../../group/entities/group.entity';
-import { PasskeyEntity } from 'src/auth/entities/passkey.entity';
-import { Challenge } from 'src/auth/entities/challenge.entity';
+import { PasskeyEntity } from '../../auth/entities/passkey.entity';
+import { Challenge } from '../../auth/entities/challenge.entity';
 
 @Entity()
 export class User {
