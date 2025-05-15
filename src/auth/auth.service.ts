@@ -17,10 +17,12 @@ import {
     AuthenticationResponseJSON,
     RegistrationResponseJSON,
 } from '@simplewebauthn/server/script/deps';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
     constructor(
+        private readonly configService: ConfigService,
         private readonly securityProvider: SecurityProvider,
 
         @InjectRepository(User)
@@ -33,6 +35,19 @@ export class AuthService {
         private readonly challengeRepository: Repository<Challenge>,
     ) {}
 
+    /**
+     * Validate if an environment variable is set; throw an error if not.
+     */
+    private throwOnUndefinedEnvVariable(
+        variable: string,
+        value: string | undefined,
+    ): string {
+        if (!value) {
+            throw new Error(`Environment variable ${variable} is not set`);
+        }
+        return value;
+    }
+
     async validateUser(
         username: string,
         submittedPassword: string,
@@ -40,7 +55,7 @@ export class AuthService {
         const user =
             username === 'TestUser'
                 ? { id: '1', username, password: 'TestPw' }
-                : null; // TODO #26: get user by username from user.service
+                : null; // TODO: Replace this with a real user lookup
         if (
             user !== null &&
             (await this.securityProvider.validatePassword(
@@ -75,8 +90,14 @@ export class AuthService {
         }
 
         const options = await generateRegistrationOptions({
-            rpID: 'motiemate.com',
-            rpName: 'Motimate',
+            rpID: this.throwOnUndefinedEnvVariable(
+                'RP_ID',
+                this.configService.get<string>('RP_ID'),
+            ),
+            rpName: this.throwOnUndefinedEnvVariable(
+                'RP_NAME',
+                this.configService.get<string>('RP_NAME'),
+            ),
             userID: userId,
             userName: user.email,
         });
@@ -104,8 +125,14 @@ export class AuthService {
         const verification = await verifyRegistrationResponse({
             response,
             expectedChallenge: challenge.challenge,
-            expectedOrigin: 'https://motiemate.com',
-            expectedRPID: 'motiemate.com',
+            expectedOrigin: this.throwOnUndefinedEnvVariable(
+                'RP_ORIGIN',
+                this.configService.get<string>('RP_ORIGIN'),
+            ),
+            expectedRPID: this.throwOnUndefinedEnvVariable(
+                'RP_ID',
+                this.configService.get<string>('RP_ID'),
+            ),
         });
 
         await this.challengeRepository.delete(challenge.id);
@@ -122,7 +149,10 @@ export class AuthService {
         }
 
         const options = await generateAuthenticationOptions({
-            rpID: 'motiemate.com',
+            rpID: this.throwOnUndefinedEnvVariable(
+                'RP_ID',
+                this.configService.get<string>('RP_ID'),
+            ),
         });
 
         const challenge = this.challengeRepository.create({
@@ -161,8 +191,14 @@ export class AuthService {
                 counter: passkey.counter,
             },
             expectedChallenge: challenge.challenge,
-            expectedOrigin: 'https://motiemate.com',
-            expectedRPID: 'motiemate.com',
+            expectedOrigin: this.throwOnUndefinedEnvVariable(
+                'RP_ORIGIN',
+                this.configService.get<string>('RP_ORIGIN'),
+            ),
+            expectedRPID: this.throwOnUndefinedEnvVariable(
+                'RP_ID',
+                this.configService.get<string>('RP_ID'),
+            ),
         });
 
         if (!verification.verified)
