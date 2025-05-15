@@ -11,6 +11,8 @@ import { GroupMember } from '../../group-member/entities/group-member.entity';
 import { MessageReaction } from '../../message-reaction/entities/message-reaction.entity';
 import { UserWeeklyTarget } from '../../user-weekly-target/entities/user-weekly-target.entity';
 import { Group } from '../../group/entities/group.entity';
+import { PasskeyEntity } from '../../auth/entities/passkey.entity';
+import { Challenge } from '../../auth/entities/challenge.entity';
 
 @Entity()
 export class User {
@@ -52,4 +54,14 @@ export class User {
 
     @OneToMany(() => Group, (group) => group.ownerUser)
     ownedGroups: Group[];
+
+    @OneToMany(() => PasskeyEntity, (passkey) => passkey.user, {
+        cascade: true,
+    })
+    passkeys: PasskeyEntity[];
+
+    @OneToMany(() => Challenge, (challenge) => challenge.user, {
+        cascade: true,
+    })
+    challenges: Challenge[];
 }
