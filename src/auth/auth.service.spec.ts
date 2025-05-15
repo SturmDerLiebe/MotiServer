@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 import { PasskeyEntity } from './entities/passkey.entity';
 import { Challenge } from './entities/challenge.entity';
+import { ConfigService } from '@nestjs/config';
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -20,6 +21,18 @@ describe('AuthService', () => {
         })),
     };
 
+    const mockConfigService = {
+        get: jest.fn((key: string) => {
+            const envVariables = {
+                RP_ID: 'motiemate.com',
+                RP_NAME: 'Motimate',
+                RP_ORIGIN: 'https://motiemate.com',
+            };
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return envVariables[key];
+        }),
+    };
+
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
@@ -33,6 +46,10 @@ describe('AuthService', () => {
                             );
                         },
                     },
+                },
+                {
+                    provide: ConfigService,
+                    useValue: mockConfigService,
                 },
                 {
                     provide: getRepositoryToken(User),

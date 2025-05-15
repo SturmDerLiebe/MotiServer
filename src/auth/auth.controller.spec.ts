@@ -6,6 +6,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 import { PasskeyEntity } from './entities/passkey.entity';
 import { Challenge } from './entities/challenge.entity';
+import { ConfigService } from '@nestjs/config';
 import { RegisterUserDto } from './dto/register-user.input';
 
 describe('AuthController', () => {
@@ -21,6 +22,18 @@ describe('AuthController', () => {
         })),
     };
 
+    const mockConfigService = {
+        get: jest.fn((key: string) => {
+            const envVariables = {
+                RP_ID: 'motiemate.com',
+                RP_NAME: 'Motimate',
+                RP_ORIGIN: 'https://motiemate.com',
+            };
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return envVariables[key];
+        }),
+    };
+
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [AuthController],
@@ -31,6 +44,10 @@ describe('AuthController', () => {
                     useValue: {
                         validatePassword: jest.fn(),
                     },
+                },
+                {
+                    provide: ConfigService,
+                    useValue: mockConfigService,
                 },
                 {
                     provide: getRepositoryToken(User),
