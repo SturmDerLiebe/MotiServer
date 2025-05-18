@@ -9,6 +9,7 @@ import { Group } from './entities/group.entity';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { GroupMember } from '../group-member/entities/group-member.entity';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class GroupService {
@@ -109,6 +110,6 @@ export class GroupService {
     }
 
     private generateInviteCode(): string {
-        return Math.random().toString(36).substring(2, 10).toUpperCase();
+        return crypto.randomBytes(4).toString('hex').toUpperCase();
     }
 }
