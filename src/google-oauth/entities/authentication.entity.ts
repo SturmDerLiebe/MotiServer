@@ -20,7 +20,7 @@ export class Authentication {
     @Column({ length: 100, nullable: true })
     google_id: string;
 
-    @Column({ length: 50 })
+    @Column({ length: 50, nullable: false })
     source: string;
 
     @OneToOne(() => User, (user) => user.authentication)
