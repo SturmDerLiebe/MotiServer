@@ -7,25 +7,27 @@ import {
     JoinColumn,
     CreateDateColumn,
     UpdateDateColumn,
+    Check,
 } from 'typeorm';
 import { Group } from '../../group/entities/group.entity';
 import { UserWeeklyTarget } from '../../user-weekly-target/entities/user-weekly-target.entity';
 
 @Entity()
+@Check('"end_date" >= "start_date"')
 export class GroupChallenge {
     @PrimaryGeneratedColumn()
     challenge_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     group_id: number;
 
     @Column({ length: 1000 })
     description: string;
 
-    @Column('date')
+    @Column('date', { nullable: false })
     start_date: Date;
 
-    @Column('date')
+    @Column('date', { nullable: false })
     end_date: Date;
 
     @CreateDateColumn()
