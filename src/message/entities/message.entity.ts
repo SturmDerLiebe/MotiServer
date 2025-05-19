@@ -6,26 +6,29 @@ import {
     OneToMany,
     JoinColumn,
     CreateDateColumn,
+    Check,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Group } from '../../group/entities/group.entity';
 import { MessageReaction } from '../../message-reaction/entities/message-reaction.entity';
 
 @Entity()
+@Check(`length(message_type) <= 50`)
+@Check(`length(content) <= 2000`)
 export class Message {
     @PrimaryGeneratedColumn()
     message_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     sender_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     group_id: number;
 
-    @Column({ length: 50 })
+    @Column({ length: 50, nullable: false })
     message_type: string;
 
-    @Column({ length: 2000 })
+    @Column({ length: 2000, nullable: false })
     content: string;
 
     @CreateDateColumn()
