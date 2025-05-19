@@ -5,25 +5,31 @@ import {
     ManyToOne,
     JoinColumn,
     CreateDateColumn,
+    Unique,
+    Check,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { GroupChallenge } from '../../group-challenge/entities/group-challenge.entity';
 
 @Entity()
+@Unique(['user_id', 'group_challenge_id'])
+@Check('"target_count" >= 0')
+@Check('"achieved_count" >= 0')
+@Check('"achieved_count" <= "target_count"')
 export class UserWeeklyTarget {
     @PrimaryGeneratedColumn()
     target_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     user_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     group_challenge_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     target_count: number;
 
-    @Column()
+    @Column({ nullable: false })
     achieved_count: number;
 
     @Column({ length: 255 })
