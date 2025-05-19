@@ -4,6 +4,7 @@ import {
     PrimaryGeneratedColumn,
     OneToOne,
     OneToMany,
+    Unique,
 } from 'typeorm';
 import { Authentication } from '../../google-oauth/entities/authentication.entity';
 import { Message } from '../../message/entities/message.entity';
@@ -15,6 +16,7 @@ import { PasskeyEntity } from '../../auth/entities/passkey.entity';
 import { Challenge } from '../../auth/entities/challenge.entity';
 
 @Entity()
+@Unique(['email'])
 export class User {
     @PrimaryGeneratedColumn({ type: 'bigint' })
     user_id: string;
@@ -28,7 +30,7 @@ export class User {
     @Column()
     account_status: boolean;
 
-    @Column({ length: 255 })
+    @Column({ length: 255, nullable: false })
     password: string;
 
     @Column({ length: 255 })
