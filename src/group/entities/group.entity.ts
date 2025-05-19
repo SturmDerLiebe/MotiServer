@@ -19,7 +19,7 @@ export class Group {
     @Column({ length: 100, nullable: false })
     group_name: string;
 
-    @Column({ length: 20 })
+    @Column({ length: 20, unique: true })
     invite_code: string;
 
     @Column('timestamp')
