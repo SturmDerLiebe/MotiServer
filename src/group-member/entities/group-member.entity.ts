@@ -5,19 +5,21 @@ import {
     ManyToOne,
     JoinColumn,
     CreateDateColumn,
+    Unique,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Group } from '../../group/entities/group.entity';
 
 @Entity()
+@Unique(['group_id', 'user_id'])
 export class GroupMember {
     @PrimaryGeneratedColumn()
     member_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     group_id: number;
 
-    @Column()
+    @Column({ nullable: false })
     user_id: number;
 
     @CreateDateColumn()
