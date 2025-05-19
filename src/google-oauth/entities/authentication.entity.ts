@@ -4,10 +4,12 @@ import {
     Column,
     OneToOne,
     JoinColumn,
+    Unique,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
+@Unique(['user_id', 'google_id'])
 export class Authentication {
     @PrimaryGeneratedColumn()
     auth_id: number;
