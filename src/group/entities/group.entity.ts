@@ -16,7 +16,7 @@ export class Group {
     @PrimaryGeneratedColumn()
     group_id: number;
 
-    @Column({ length: 100 })
+    @Column({ length: 100, nullable: false })
     group_name: string;
 
     @Column({ length: 20 })
