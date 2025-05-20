@@ -5,6 +5,7 @@ import {
     OneToOne,
     OneToMany,
     Unique,
+    Index,
 } from 'typeorm';
 import { Authentication } from '../../google-oauth/entities/authentication.entity';
 import { Message } from '../../message/entities/message.entity';
@@ -17,6 +18,7 @@ import { Challenge } from '../../auth/entities/challenge.entity';
 
 @Entity()
 @Unique(['email'])
+@Index(['user_id'])
 export class User {
     @PrimaryGeneratedColumn({ type: 'bigint' })
     user_id: string;
