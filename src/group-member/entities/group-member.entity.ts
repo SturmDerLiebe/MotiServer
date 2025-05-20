@@ -6,12 +6,15 @@ import {
     JoinColumn,
     CreateDateColumn,
     Unique,
+    Index,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Group } from '../../group/entities/group.entity';
 
 @Entity()
 @Unique(['group_id', 'user_id'])
+@Index(['group_id'])
+@Index(['user_id'])
 export class GroupMember {
     @PrimaryGeneratedColumn()
     member_id: number;
