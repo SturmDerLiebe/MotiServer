@@ -32,7 +32,7 @@ export class Message {
     @Column({ length: 50, nullable: false })
     message_type: string;
 
-    @Column({ length: 2000, nullable: false })
+    @Column({ length: 2000 })
     content: string;
 
     @CreateDateColumn()
