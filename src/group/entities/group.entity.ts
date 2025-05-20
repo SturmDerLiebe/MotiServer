@@ -5,6 +5,7 @@ import {
     OneToMany,
     ManyToOne,
     JoinColumn,
+    Index,
 } from 'typeorm';
 import { GroupMember } from '../../group-member/entities/group-member.entity';
 import { Message } from '../../message/entities/message.entity';
@@ -12,6 +13,7 @@ import { GroupChallenge } from '../../group-challenge/entities/group-challenge.e
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
+@Index(['group_id'])
 export class Group {
     @PrimaryGeneratedColumn()
     group_id: number;
@@ -26,6 +28,7 @@ export class Group {
     created_at: Date;
 
     @Column()
+    @Index()
     owner: number;
 
     @Column({ length: 50 })
