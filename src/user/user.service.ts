@@ -28,6 +28,11 @@ export class UserService {
         // parseInt will not work because the defined type is already "number"
         return this.users.get(+userID);
     }
+    findByUsername(username: string): User | undefined {
+        return Array.from(this.users.values()).find(
+            (user) => user.name === username,
+        );
+    }
     update(userID: number, user: UpdateUserDto): boolean {
         // TODO: #26 - update user in DB
         if (this.users.has(+userID)) {
