@@ -125,8 +125,8 @@ describe('UsersService', () => {
                 password: 'pass',
             });
             const user = service.findByUsername('Alice');
-            expect(user).toBeDefined();
-            expect(user?.email).toBe('alice@mail.com');
+            if (!user) throw new Error('User not found');
+            expect(user.email).toBe('alice@mail.com');
         });
 
         it('should return undefined if username not found', () => {
