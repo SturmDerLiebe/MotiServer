@@ -15,8 +15,7 @@ export class UserService {
         this.users.set(this.userIDcounter, user);
         return this.userIDcounter;
     }
-    findAll() {
-        // TODO: #26 - get all users from DB
+    findAll(): User[] {
         return Array.from(this.users.values());
     }
     findOne(userID: number): User | undefined {
@@ -27,6 +26,11 @@ export class UserService {
         // was not the case despite the type being number in the function def
         // parseInt will not work because the defined type is already "number"
         return this.users.get(+userID);
+    }
+    findByUsername(username: string): User | undefined {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        const usersArray = Array.from(this.users.values()) as User[];
+        return usersArray.find((user: User) => user.name === username);
     }
     update(userID: number, user: UpdateUserDto): boolean {
         // TODO: #26 - update user in DB
