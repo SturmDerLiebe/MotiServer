@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -38,7 +37,7 @@ describe('AuthController', () => {
                 RP_NAME: 'Motimate',
                 RP_ORIGIN: 'https://motiemate.com',
             };
-            return envVariables[key];
+            return envVariables[key] as unknown;
         }),
     };
 
@@ -149,28 +148,21 @@ describe('AuthController', () => {
     });
     describe('changePassword', () => {
         it('should change password successfully', async () => {
-            jest.spyOn(
-                controller['authService'],
-                'changePassword',
-            ).mockResolvedValue(undefined);
+            const spy = jest
+                .spyOn(controller['authService'], 'changePassword')
+                .mockResolvedValue(undefined);
             const userId = 1;
             const newPassword = 'newPassword123';
 
             const result = await controller.changePassword(userId, newPassword);
 
-            expect(
-                controller['authService'].changePassword,
-            ).toHaveBeenCalledWith(userId, newPassword);
+            expect(spy).toHaveBeenCalledWith(userId, newPassword);
             expect(result).toEqual({
                 message: 'Password changed successfully',
             });
         });
 
         it('should throw BadRequestException when changePassword fails', async () => {
-            jest.spyOn(
-                controller['authService'],
-                'changePassword',
-            ).mockRejectedValue(new Error('Failed'));
             const userId = 1;
             const newPassword = 'newPassword123';
 
@@ -185,26 +177,19 @@ describe('AuthController', () => {
                 challenge: 'test-challenge',
                 user: { id: 'user-id' },
             } as unknown as jest.Mocked<Challenge>;
-            jest.spyOn(
-                controller['authService'],
-                'generateRegistrationOptions',
-            ).mockResolvedValue(mockChallenge);
+            const spy = jest
+                .spyOn(controller['authService'], 'generateRegistrationOptions')
+                .mockResolvedValue(mockChallenge);
             const userId = 'user-id';
 
             const result = await controller.webauthnRegister(userId);
 
-            expect(
-                controller['authService'].generateRegistrationOptions,
-            ).toHaveBeenCalledWith(userId);
+            expect(spy).toHaveBeenCalledWith(userId);
             expect(result).toBeInstanceOf(ChallengeDTO);
             expect(result).toEqual(new ChallengeDTO(mockChallenge));
         });
 
         it('should throw BadRequestException when generateRegistrationOptions fails', async () => {
-            jest.spyOn(
-                controller['authService'],
-                'generateRegistrationOptions',
-            ).mockRejectedValue(new Error('Failed'));
             const userId = 'user-id';
 
             await expect(controller.webauthnRegister(userId)).rejects.toThrow(
@@ -218,10 +203,9 @@ describe('AuthController', () => {
                 id: 'credential-id',
             } as RegistrationResponseJSON;
             const mockVerification = { verified: true };
-            jest.spyOn(
-                controller['authService'],
-                'verifyRegistrationResponse',
-            ).mockResolvedValue(mockVerification);
+            const spy = jest
+                .spyOn(controller['authService'], 'verifyRegistrationResponse')
+                .mockResolvedValue(mockVerification);
             const userId = 'user-id';
 
             const result = await controller.webauthnRegisterVerify(
@@ -229,9 +213,7 @@ describe('AuthController', () => {
                 userId,
             );
 
-            expect(
-                controller['authService'].verifyRegistrationResponse,
-            ).toHaveBeenCalledWith(mockResponse, userId);
+            expect(spy).toHaveBeenCalledWith(mockResponse, userId);
             expect(result).toEqual({ verification: mockVerification });
         });
 
@@ -239,10 +221,6 @@ describe('AuthController', () => {
             const mockResponse = {
                 id: 'credential-id',
             } as RegistrationResponseJSON;
-            jest.spyOn(
-                controller['authService'],
-                'verifyRegistrationResponse',
-            ).mockRejectedValue(new Error('Failed'));
             const userId = 'user-id';
 
             await expect(
@@ -255,26 +233,22 @@ describe('AuthController', () => {
             const mockChallenge = {
                 challenge: 'test-challenge',
             } as unknown as jest.Mocked<Challenge>;
-            jest.spyOn(
-                controller['authService'],
-                'generateAuthenticationOptions',
-            ).mockResolvedValue(mockChallenge);
+            const spy = jest
+                .spyOn(
+                    controller['authService'],
+                    'generateAuthenticationOptions',
+                )
+                .mockResolvedValue(mockChallenge);
             const userId = 'user-id';
 
             const result = await controller.webauthnAuthenticate(userId);
 
-            expect(
-                controller['authService'].generateAuthenticationOptions,
-            ).toHaveBeenCalledWith(userId);
+            expect(spy).toHaveBeenCalledWith(userId);
             expect(result).toBeInstanceOf(ChallengeDTO);
             expect(result).toEqual(new ChallengeDTO(mockChallenge));
         });
 
         it('should throw BadRequestException when generateAuthenticationOptions fails', async () => {
-            jest.spyOn(
-                controller['authService'],
-                'generateAuthenticationOptions',
-            ).mockRejectedValue(new Error('Failed'));
             const userId = 'user-id';
 
             await expect(
@@ -290,10 +264,12 @@ describe('AuthController', () => {
             const mockVerification = {
                 verified: true,
             } as VerifiedAuthenticationResponse;
-            jest.spyOn(
-                controller['authService'],
-                'verifyAuthenticationResponse',
-            ).mockResolvedValue(mockVerification);
+            const spy = jest
+                .spyOn(
+                    controller['authService'],
+                    'verifyAuthenticationResponse',
+                )
+                .mockResolvedValue(mockVerification);
             const userId = 'user-id';
 
             const result = await controller.webauthnAuthenticateVerify(
@@ -301,9 +277,7 @@ describe('AuthController', () => {
                 userId,
             );
 
-            expect(
-                controller['authService'].verifyAuthenticationResponse,
-            ).toHaveBeenCalledWith(mockResponse, userId);
+            expect(spy).toHaveBeenCalledWith(mockResponse, userId);
             expect(result).toEqual({ verification: mockVerification });
         });
 
@@ -311,10 +285,6 @@ describe('AuthController', () => {
             const mockResponse = {
                 id: 'credential-id',
             } as AuthenticationResponseJSON;
-            jest.spyOn(
-                controller['authService'],
-                'verifyAuthenticationResponse',
-            ).mockRejectedValue(new Error('Failed'));
             const userId = 'user-id';
 
             await expect(
