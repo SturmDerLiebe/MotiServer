@@ -6,9 +6,23 @@ import Redis from 'ioredis';
 import { RedisStore } from 'connect-redis';
 import * as passport from 'passport';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+
+    // Global validation pipe
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true,
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            transformOptions: {
+                enableImplicitConversion: true,
+            },
+        }),
+    );
+
     app.use(
         session({
             secret: process.env.SESSION_SECRET as string,
