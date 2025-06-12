@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 describe('UserController', () => {
     let controller: UserController;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let service: UserService;
 
     const mockUser = {
