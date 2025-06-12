@@ -15,6 +15,7 @@ import { UserWeeklyTarget } from '../../user-weekly-target/entities/user-weekly-
 import { Group } from '../../group/entities/group.entity';
 import { PasskeyEntity } from '../../auth/entities/passkey.entity';
 import { Challenge } from '../../auth/entities/challenge.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @Unique(['email'])
@@ -32,7 +33,8 @@ export class User {
     @Column()
     account_status: boolean;
 
-    @Column({ length: 255, nullable: false })
+    @Column({ length: 128, nullable: false })
+    @Exclude({ toPlainOnly: true }) // Exclude password from serialization
     password: string;
 
     @Column({ length: 255 })
