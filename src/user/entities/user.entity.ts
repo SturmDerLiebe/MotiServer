@@ -34,7 +34,6 @@ export class User {
     account_status: boolean;
 
     @Column({ length: 128, nullable: false })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     @Exclude({ toPlainOnly: true }) // Exclude password from serialization
     password: string;
 
